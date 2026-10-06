@@ -1,0 +1,52 @@
+
+name: Pytest
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'docs/**'
+      - 'README.md'
+      - 'README_en.md'
+      - 'mkdocs.yml'
+      - '.github/workflows/check-links-pr.yaml'
+      - '.github/workflows/check-links-periodic.yaml'
+      - '.github/workflows/pylint.yaml'
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - 'docs/**'
+      - 'README.md'
+      - 'README_en.md'
+      - 'mkdocs.yml'
+      - '.github/workflows/check-links-pr.yaml'
+      - '.github/workflows/check-links-periodic.yaml'
+      - '.github/workflows/pylint.yaml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - name: Install uv
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+      - name: Install dependencies
+        run: |
+            uv pip install --python ${Python_ROOT_DIR} -e '.[full]'
+      # The offline unit tests do not need API keys. Real-API "fire" tests are
+      # opt-in via `pytest --run-fire` and must never run in CI by default.
+      - name: Run pytest
+        run: pytest -v -n auto
