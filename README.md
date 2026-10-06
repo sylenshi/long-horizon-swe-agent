@@ -11,8 +11,6 @@
   <b><a href="README.md">中文</a></b> | <b><a href="README_en.md">English</a></b>
 </p>
 
-> 长程 AI 软件工程智能体：基于原mini-swe-agent项目，在不影响agent轨迹记录功能的前提下完善了上下文压缩机制，使mini-swe-agent具备了在长程软件工程benchmark(如swe-marathon)下进行评测任务的能力。
-
 Long-Horizon SWE Agent（仓库 `long-horizon-swe-agent`）是 [mini-swe-agent](https://github.com/SWE-agent/mini-swe-agent) 的二次开发项目。
 上游用不到一百行 Python 实现了一个极简、高性能的 bash-only 软件工程智能体；本项目在完整保留这套极简骨架的前提下，
 参考现代工业级 coding agent [pi](https://github.com/earendil-works/pi) 的 harness 设计经验，
